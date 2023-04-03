@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+body {
+  background-color: #1e1e1e;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
