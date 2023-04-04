@@ -4,6 +4,7 @@ import "./css/app.css";
 import { UserContext } from "./contexts/UserContext";
 import ErrorPage from "./routes/ErrorPage";
 import Root from "./routes/Root";
+import Index from "./routes/Index";
 import Home from "./routes/Home";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
@@ -17,14 +18,18 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <Index />,
+      },
+      {
+        path: "/home",
         element: <Home />,
       },
       {
-        path: "/SignIn",
+        path: "/signin",
         element: <SignIn />,
       },
       {
-        path: "/SignUp",
+        path: "/signup",
         element: <SignUp />,
       },
     ],
