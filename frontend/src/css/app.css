@@ -23,6 +23,11 @@ ul {
 
 button {
   border: none;
-  background-color: inherit;
+  background-color: transparent;
   cursor: pointer;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
 }

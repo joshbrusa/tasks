@@ -1,55 +1,21 @@
-aside {
-  height: 100%;
-  position: fixed;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav {
+  width: 200px;
+  display: flex;
+  justify-content: center;
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-aside a {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  display: flex;
-  align-items: center;
-}
-
-aside h2 {
+nav h1 {
   font-weight: normal;
-  margin-left: 10px;
-}
-
-aside img {
-  height: 30px;
-  width: 30px;
-  filter: invert(100%);
-}
-
-aside button {
-  position: absolute;
-  bottom: 0;
-  padding: 10px;
+  font-size: 20px;
 }
 
 main {
-  padding: 10px;
-}
-
-.icon {
-  height: 30px;
-  width: 30px;
-}
-
-.asideSidebarOpen {
-  width: 200px;
-}
-
-.asideSidebarClosed {
-  width: 50px;
-}
-
-.mainSidebarOpen {
-  margin-left: 200px;
-}
-
-.mainSidebarClosed {
-  margin-left: 50px;
+  width: 1000px;
 }
