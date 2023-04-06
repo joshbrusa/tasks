@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./css/app.css";
 import { UserContext } from "./contexts/UserContext";
 import ErrorPage from "./routes/ErrorPage";
 import Root from "./routes/Root";
@@ -25,11 +24,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/signin",
+        path: "/signIn",
         element: <SignIn />,
       },
       {
-        path: "/signup",
+        path: "/signUp",
         element: <SignUp />,
       },
     ],
@@ -37,6 +36,7 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  const [authenticating, setAuthenticating] = useState(true);
   const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
@@ -48,19 +48,22 @@ export default function App() {
           credentials: "include",
         }
       );
-
       if (res.ok) {
         const user = await res.json();
         setUser(user);
       }
+      setAuthenticating(false);
     }
-
     check();
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <RouterProvider router={router} />
-    </UserContext.Provider>
-  );
+  if (authenticating) {
+    return;
+  } else {
+    return (
+      <UserContext.Provider value={{ user, setUser }}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
+    );
+  }
 }
