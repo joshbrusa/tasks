@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "./contexts/UserContext";
 import ErrorPage from "./routes/ErrorPage";
 import Root from "./routes/Root";
@@ -41,29 +42,27 @@ export default function App() {
 
   useEffect(() => {
     async function check() {
-      const res = await fetch(
-        import.meta.env.VITE_BACKEND_ORIGIN + "/auth/check",
-        {
-          method: "POST",
-          credentials: "include",
+      try {
+        const res = await fetch(
+          import.meta.env.VITE_BACKEND_ORIGIN + "/auth/check",
+          {
+            method: "POST",
+            credentials: "include",
+          }
+        );
+        if (res.ok) {
+          const user = await res.json();
+          setUser(user);
         }
-      );
-      if (res.ok) {
-        const user = await res.json();
-        setUser(user);
-      }
+      } catch {}
       setAuthenticating(false);
     }
     check();
   }, []);
 
-  if (authenticating) {
-    return;
-  } else {
-    return (
-      <UserContext.Provider value={{ user, setUser }}>
-        <RouterProvider router={router} />
-      </UserContext.Provider>
-    );
-  }
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {authenticating ? null : <RouterProvider router={router} />}
+    </UserContext.Provider>
+  );
 }
