@@ -1,10 +1,22 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HomeIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
+import useUser from "../hooks/useUser";
 
 export default function Nav() {
   const { user } = useContext(UserContext);
+  const { check } = useUser();
+
+  async function handleSignOut() {
+    try {
+      await fetch(import.meta.env.VITE_BACKEND_ORIGIN + "/auth/signOut", {
+        method: "POST",
+        credentials: "include",
+      });
+      check();
+    } catch {}
+  }
 
   return (
     <nav>
@@ -22,10 +34,10 @@ export default function Nav() {
         </li>
         {user ? (
           <li>
-            <Link to="/signOut">
+            <button onClick={handleSignOut}>
               <UserCircleIcon className="icon" />
               <h2>Sign Out</h2>
-            </Link>
+            </button>
           </li>
         ) : (
           <li>

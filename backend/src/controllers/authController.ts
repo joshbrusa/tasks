@@ -25,24 +25,26 @@ export async function check(req: Request, res: Response, next: NextFunction) {
 
 export async function signIn(req: Request, res: Response, next: NextFunction) {
   try {
-    if (req.body.email.length === 0) {
+    const { email, password } = req.body;
+
+    if (!email) {
       res.status(400).json({ message: "email required" });
       return;
-    } else if (req.body.password.length === 0) {
+    } else if (!password) {
       res.status(400).json({ message: "password required" });
       return;
     }
 
     const user = await prisma.user.findUnique({
       where: {
-        email: req.body.email,
+        email,
       },
     });
 
     if (user === null) {
       res.status(404).json({ message: "user not found" });
       return;
-    } else if (compareSync(req.body.password, user.password) === false) {
+    } else if (compareSync(password, user.password) === false) {
       res.status(400).json({ message: "incorrect password" });
       return;
     }
@@ -80,24 +82,35 @@ export async function signOut(req: Request, res: Response, next: NextFunction) {
 
 export async function signUp(req: Request, res: Response, next: NextFunction) {
   try {
-    if (req.body.email.length === 0) {
+    const { email, username, password } = req.body;
+
+    if (!email) {
       res.status(400).json({ message: "email required" });
       return;
-    } else if (req.body.username.length === 0) {
+    } else if (!username) {
       res.status(400).json({ message: "username required" });
       return;
-    } else if (req.body.password.length === 0) {
+    } else if (!password) {
       res.status(400).json({ message: "password required" });
       return;
     }
 
-    req.body.password = hashSync(req.body.password, 10);
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      res.status(400).json({ message: "user already exists" });
+      return;
+    }
 
     await prisma.user.create({
       data: {
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password,
+        password: hashSync(password, 10),
       },
     });
 
@@ -113,31 +126,30 @@ export async function forgotPassword(
   next: NextFunction
 ) {
   try {
-    if (req.body.email.length === 0) {
+    const { email } = req.body;
+
+    if (!email) {
       res.status(400).json({ message: "email required" });
       return;
     }
 
     if (process.env.NODEMAILER_SECRET) {
-      const jwt = sign(
-        { email: req.body.email },
-        process.env.NODEMAILER_SECRET,
-        { expiresIn: 60 * 10 }
-      );
+      const jwt = sign({ email: email }, process.env.NODEMAILER_SECRET, {
+        expiresIn: 60 * 10,
+      });
       const url =
         req.protocol + "://" + req.get("host") + req.originalUrl + "/" + jwt;
-      console.log(url);
 
       transport
         .sendMail({
           from: process.env.NODEMAILER_EMAIL,
-          to: req.body.email,
+          to: email,
           subject: "Josh Tasks Reset Password",
           html: `Click <a href="${url}">here</a> to reset your password.`,
           text: `Use this link to reset your password: ${url}`,
         })
         .catch((error) => {
-          console.log("email not sent, message: " + error.message);
+          res.status(400).json({ message: "email not sent" });
         });
     }
 
@@ -153,7 +165,9 @@ export async function forgotPasswordJwt(
   next: NextFunction
 ) {
   try {
-    if (req.body.password.length === 0) {
+    const { password } = req.body;
+
+    if (!password) {
       res.status(400).json({ message: "password required" });
       return;
     }
@@ -164,14 +178,12 @@ export async function forgotPasswordJwt(
         process.env.NODEMAILER_SECRET
       );
 
-      req.body.password = hashSync(req.body.password, 10);
-
       await prisma.user.update({
         where: {
           email: decoded.email,
         },
         data: {
-          password: req.body.password,
+          password: hashSync(password, 10),
         },
       });
     }

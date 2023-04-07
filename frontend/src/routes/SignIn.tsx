@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
 export default function SignIn() {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
+  const { check } = useUser();
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -32,14 +34,15 @@ export default function SignIn() {
       );
 
       if (res.ok) {
+        check();
         navigate("/");
       } else {
         const json = await res.json();
-        setErrorMessage(json.message);
+        setMessage(json.message);
         setDisabled(false);
       }
     } catch {
-      setErrorMessage("cannot reach server");
+      setMessage("cannot reach server");
     }
   }
 
@@ -64,9 +67,7 @@ export default function SignIn() {
         <button type="submit" disabled={disabled}>
           Submit
         </button>
-        {errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
-        ) : null}
+        {message ? <div className="errorMessage">{message}</div> : null}
       </form>
       <Link to="/signUp">No account? Sign Up</Link>
     </>
