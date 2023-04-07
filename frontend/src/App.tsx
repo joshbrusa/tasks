@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "./contexts/UserContext";
 import ErrorPage from "./routes/ErrorPage";
 import Root from "./routes/Root";
+import SignInRoot from "./routes/SignInRoot";
+import SignOutRoot from "./routes/SignOutRoot";
 import Index from "./routes/Index";
-import Home from "./routes/Home";
+import Tasks from "./routes/Tasks";
+import MyTasks from "./routes/MyTasks";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import ChangePassword from "./routes/ChangePassword";
@@ -14,7 +16,6 @@ import type { User } from "./contexts/UserContext";
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
@@ -23,24 +24,38 @@ const router = createBrowserRouter([
         element: <Index />,
       },
       {
-        path: "/home",
-        element: <Home />,
+        path: "tasks",
+        element: <Tasks />,
       },
       {
-        path: "/signIn",
-        element: <SignIn />,
+        element: <SignInRoot />,
+        children: [
+          {
+            path: "myTasks",
+            element: <MyTasks />,
+          },
+        ],
       },
       {
-        path: "/signUp",
-        element: <SignUp />,
-      },
-      {
-        path: "/changePassword",
-        element: <ChangePassword />,
-      },
-      {
-        path: "/changePassword/:jwt",
-        element: <ChangePasswordJwt />,
+        element: <SignOutRoot />,
+        children: [
+          {
+            path: "signIn",
+            element: <SignIn />,
+          },
+          {
+            path: "signUp",
+            element: <SignUp />,
+          },
+          {
+            path: "changePassword",
+            element: <ChangePassword />,
+          },
+          {
+            path: "changePassword/:jwt",
+            element: <ChangePasswordJwt />,
+          },
+        ],
       },
     ],
   },

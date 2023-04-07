@@ -16,7 +16,7 @@ export async function check(req: Request, res: Response, next: NextFunction) {
         });
       }
     } catch (error) {
-      res.status(401).json({ message: "unauthorized" });
+      res.status(401).json({ errorMessage: "unauthorized" });
     }
   } catch (error) {
     next(error);
@@ -28,10 +28,10 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
     if (!email) {
-      res.status(400).json({ message: "email required" });
+      res.status(403).json({ errorMessage: "email required" });
       return;
     } else if (!password) {
-      res.status(400).json({ message: "password required" });
+      res.status(403).json({ errorMessage: "password required" });
       return;
     }
 
@@ -42,10 +42,10 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
     });
 
     if (user === null) {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ errorMessage: "user not found" });
       return;
     } else if (compareSync(password, user.password) === false) {
-      res.status(400).json({ message: "incorrect password" });
+      res.status(403).json({ errorMessage: "incorrect password" });
       return;
     }
 
@@ -85,13 +85,13 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
     const { email, username, password } = req.body;
 
     if (!email) {
-      res.status(400).json({ message: "email required" });
+      res.status(403).json({ errorMessage: "email required" });
       return;
     } else if (!username) {
-      res.status(400).json({ message: "username required" });
+      res.status(403).json({ errorMessage: "username required" });
       return;
     } else if (!password) {
-      res.status(400).json({ message: "password required" });
+      res.status(403).json({ errorMessage: "password required" });
       return;
     }
 
@@ -102,7 +102,7 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
     });
 
     if (user) {
-      res.status(400).json({ message: "user already exists" });
+      res.status(403).json({ errorMessage: "user already exists" });
       return;
     }
 
@@ -129,7 +129,7 @@ export async function changePassword(
     const { email } = req.body;
 
     if (!email) {
-      res.status(400).json({ message: "email required" });
+      res.status(403).json({ errorMessage: "email required" });
       return;
     }
 
@@ -140,7 +140,7 @@ export async function changePassword(
     });
 
     if (!user) {
-      res.status(400).json({ message: "user does not exist" });
+      res.status(404).json({ errorMessage: "user not found" });
       return;
     }
 
@@ -160,12 +160,12 @@ export async function changePassword(
           text: `Use this link to change your password: ${url}`,
         });
       } catch {
-        res.status(400).json({ message: "email not sent" });
+        res.status(400).json({ errorMessage: "email not sent" });
         return;
       }
     }
 
-    res.json({ message: "email sent" });
+    res.json({ successMessage: "email sent" });
   } catch (error) {
     next(error);
   }
@@ -180,7 +180,7 @@ export async function changePasswordJwt(
     const { password } = req.body;
 
     if (!password) {
-      res.status(400).json({ message: "password required" });
+      res.status(403).json({ errorMessage: "password required" });
       return;
     }
 
@@ -197,7 +197,7 @@ export async function changePasswordJwt(
       });
 
       if (!user) {
-        res.status(400).json({ message: "user does not exist" });
+        res.status(404).json({ errorMessage: "user not found" });
         return;
       }
 

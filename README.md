@@ -2,4 +2,6 @@
 
 ## Todo
 
-- [ ] Authentication
+- [x] Authentication
+- [ ] CRUD My Tasks
+- [ ] All Tasks

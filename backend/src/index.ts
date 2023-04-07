@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/errorHandler";
 import authRouter from "./routes/authRouter";
+import tasksRouter from "./routes/tasksRouter";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/auth", authRouter);
+app.use("/tasks", tasksRouter);
 
 // error middleware, keep at end
 app.use(errorHandler);

@@ -32,12 +32,12 @@ export default function ChangePassword() {
       if (res.ok) {
         const json = await res.json();
         setErrorMessage("");
-        setSuccessMessage(json.message);
+        setSuccessMessage(json.successMessage);
         setDisabled(false);
       } else {
         const json = await res.json();
         setSuccessMessage("");
-        setErrorMessage(json.message);
+        setErrorMessage(json.errorMessage);
         setDisabled(false);
       }
     } catch {

@@ -1,6 +1,10 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { HomeIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import {
+  GlobeAltIcon,
+  MapPinIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
 import useUser from "../hooks/useUser";
 
@@ -27,11 +31,19 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link to="/home">
-            <HomeIcon className="icon" />
-            <h2>Home</h2>
+          <Link to="/tasks">
+            <GlobeAltIcon className="icon" />
+            <h2>Tasks</h2>
           </Link>
         </li>
+        {user ? (
+          <li>
+            <Link to="/myTasks">
+              <MapPinIcon className="icon" />
+              <h2>My Tasks</h2>
+            </Link>
+          </li>
+        ) : null}
         {user ? (
           <li>
             <button onClick={handleSignOut}>

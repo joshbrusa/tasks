@@ -35,7 +35,7 @@ export default function ChangePasswordJwt() {
         navigate("/signIn");
       } else {
         const json = await res.json();
-        setErrorMessage(json.message);
+        setErrorMessage(json.errorMessage);
         setDisabled(false);
       }
     } catch {
