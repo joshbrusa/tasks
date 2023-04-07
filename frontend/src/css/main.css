@@ -5,62 +5,8 @@
   color: white;
 }
 
-body {
-  background-color: #1e1e1e;
-}
-
-main {
-  padding: 10px;
-  flex: 1 1 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-nav {
-  padding: 10px;
-  flex: 1 1 20%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-nav a {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-}
-
-nav h1 {
-  font-size: 1.5rem;
-}
-
-nav h2 {
-  padding: 0 0 0 10px;
-  font-weight: normal;
-  font-size: 1rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form label {
-  margin: 10px 0 0 0;
-}
-
-form input {
-  margin: 5px 0 0 0;
-  padding: 5px;
-}
-
-form button {
-  padding: 10px;
-  font-size: 1rem;
-}
-
 a {
+  display: block;
   text-decoration: none;
 }
 
@@ -82,6 +28,66 @@ button:hover {
   text-decoration: underline;
 }
 
+body {
+  background-color: #1e1e1e;
+}
+
+main {
+  padding: 20px;
+  flex: 1 1 80%;
+}
+
+main a {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  padding: 20px;
+  flex: 1 1 20%;
+}
+
+nav a {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+nav h1 {
+  font-size: 1.5rem;
+}
+
+nav h2 {
+  margin-left: 10px;
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-top: 10px;
+}
+
+form input {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+}
+
+form button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .icon {
   height: 30px;
   width: 30px;
@@ -90,6 +96,13 @@ button:hover {
 .container {
   display: flex;
   flex-direction: row;
+}
+
+.errorMessage {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  color: red;
 }
 
 @media only screen and (max-width: 786px) {
