@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import useUser from "../hooks/useUser";
+import { useParams, useNavigate } from "react-router-dom";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
-export default function SignIn() {
-  const [formValues, setFormValues] = useState({ email: "", password: "" });
+export default function ChangePasswordJwt() {
+  const [formValues, setFormValues] = useState({ password: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const { jwt } = useParams();
   const navigate = useNavigate();
-  const { check } = useUser();
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -21,21 +20,19 @@ export default function SignIn() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signIn/`,
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/changePassword/${jwt}/`,
         {
-          method: "POST",
+          method: "PUT",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: formValues.email,
             password: formValues.password,
           }),
         }
       );
 
       if (res.ok) {
-        check();
-        navigate("/");
+        navigate("/signIn");
       } else {
         const json = await res.json();
         setErrorMessage(json.message);
@@ -48,15 +45,8 @@ export default function SignIn() {
 
   return (
     <>
-      <h1>Sign In</h1>
+      <h1>Change Password</h1>
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formValues.email}
-          onChange={handleInputChange}
-        />
         <label>Password</label>
         <input
           type="password"
@@ -71,8 +61,6 @@ export default function SignIn() {
           <div className="errorMessage">{errorMessage}</div>
         ) : null}
       </form>
-      <Link to="/changePassword">Forgot password? Reset Password</Link>
-      <Link to="/signUp">No account? Sign Up</Link>
     </>
   );
 }

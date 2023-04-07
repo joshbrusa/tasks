@@ -8,7 +8,7 @@ export default function SignUp() {
     username: "",
     password: "",
   });
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export default function SignUp() {
 
     try {
       const res = await fetch(
-        import.meta.env.VITE_BACKEND_ORIGIN + "/auth/signUp",
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signUp/`,
         {
           method: "POST",
           credentials: "include",
@@ -40,11 +40,11 @@ export default function SignUp() {
         navigate("/signIn");
       } else {
         const json = await res.json();
-        setMessage(json.message);
+        setErrorMessage(json.message);
         setDisabled(false);
       }
     } catch {
-      setMessage("cannot reach server");
+      setErrorMessage("cannot reach server");
     }
   }
 
@@ -76,7 +76,9 @@ export default function SignUp() {
         <button type="submit" disabled={disabled}>
           Submit
         </button>
-        {message ? <div className="errorMessage">{message}</div> : null}
+        {errorMessage ? (
+          <div className="errorMessage">{errorMessage}</div>
+        ) : null}
       </form>
     </>
   );

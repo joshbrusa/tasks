@@ -103,11 +103,26 @@ form button {
   flex-direction: row;
 }
 
+.successMessage {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  color: green;
+}
+
 .errorMessage {
   padding: 10px;
   display: flex;
   justify-content: center;
   color: red;
+}
+
+.errorPage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 786px) {

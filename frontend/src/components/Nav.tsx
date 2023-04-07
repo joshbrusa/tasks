@@ -10,7 +10,7 @@ export default function Nav() {
 
   async function handleSignOut() {
     try {
-      await fetch(import.meta.env.VITE_BACKEND_ORIGIN + "/auth/signOut", {
+      await fetch(`${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signOut/`, {
         method: "POST",
         credentials: "include",
       });

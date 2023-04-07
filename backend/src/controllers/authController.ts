@@ -120,7 +120,7 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function forgotPassword(
+export async function changePassword(
   req: Request,
   res: Response,
   next: NextFunction
@@ -133,33 +133,45 @@ export async function forgotPassword(
       return;
     }
 
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      res.status(400).json({ message: "user does not exist" });
+      return;
+    }
+
     if (process.env.NODEMAILER_SECRET) {
       const jwt = sign({ email: email }, process.env.NODEMAILER_SECRET, {
         expiresIn: 60 * 10,
       });
-      const url =
-        req.protocol + "://" + req.get("host") + req.originalUrl + "/" + jwt;
 
-      transport
-        .sendMail({
+      const url = `${req.get("origin")}/changePassword/${jwt}/`;
+
+      try {
+        transport.sendMail({
           from: process.env.NODEMAILER_EMAIL,
           to: email,
-          subject: "Josh Tasks Reset Password",
-          html: `Click <a href="${url}">here</a> to reset your password.`,
-          text: `Use this link to reset your password: ${url}`,
-        })
-        .catch((error) => {
-          res.status(400).json({ message: "email not sent" });
+          subject: "Josh Tasks Change Password",
+          html: `Click <a href="${url}">here</a> to change your password.`,
+          text: `Use this link to change your password: ${url}`,
         });
+      } catch {
+        res.status(400).json({ message: "email not sent" });
+        return;
+      }
     }
 
-    res.end();
+    res.json({ message: "email sent" });
   } catch (error) {
     next(error);
   }
 }
 
-export async function forgotPasswordJwt(
+export async function changePasswordJwt(
   req: Request,
   res: Response,
   next: NextFunction
@@ -177,6 +189,17 @@ export async function forgotPasswordJwt(
         req.params.jwt,
         process.env.NODEMAILER_SECRET
       );
+
+      const user = await prisma.user.findUnique({
+        where: {
+          email: decoded.email,
+        },
+      });
+
+      if (!user) {
+        res.status(400).json({ message: "user does not exist" });
+        return;
+      }
 
       await prisma.user.update({
         where: {

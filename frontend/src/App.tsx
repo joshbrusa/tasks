@@ -8,6 +8,8 @@ import Index from "./routes/Index";
 import Home from "./routes/Home";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
+import ChangePassword from "./routes/ChangePassword";
+import ChangePasswordJwt from "./routes/ChangePasswordJwt";
 import type { User } from "./contexts/UserContext";
 
 const router = createBrowserRouter([
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: "/signUp",
         element: <SignUp />,
+      },
+      {
+        path: "/changePassword",
+        element: <ChangePassword />,
+      },
+      {
+        path: "/changePassword/:jwt",
+        element: <ChangePasswordJwt />,
       },
     ],
   },
