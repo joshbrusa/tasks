@@ -65,8 +65,6 @@ export default function App() {
   const [authenticating, setAuthenticating] = useState(true);
   const [user, setUser] = useState<User>(null);
 
-  console.log(import.meta.env.VITE_BACKEND_ORIGIN);
-
   useEffect(() => {
     async function check() {
       try {
