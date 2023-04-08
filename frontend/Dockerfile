@@ -1,9 +1,10 @@
+ARG VITE_BACKEND_ORIGIN
+
 FROM node as build
 WORKDIR /code
 COPY package*.json ./
 RUN npm install
 COPY . .
-ENV VITE_BACKEND_ORIGIN=$VITE_BACKEND_ORIGIN
 RUN npm run build
 
 FROM nginx
