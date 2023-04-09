@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useUser from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
 export default function SignIn() {

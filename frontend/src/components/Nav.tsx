@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   GlobeAltIcon,
@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
 import useUser from "../hooks/useUser";
+import "../css/nav.css";
 
 export default function Nav() {
   const { user } = useContext(UserContext);

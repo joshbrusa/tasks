@@ -10,10 +10,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 ul {
   list-style: none;
 }
@@ -24,49 +20,13 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  text-decoration: underline;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 body {
   background-color: #1e1e1e;
-}
-
-main {
-  padding: 20px;
-  flex: 1 1 80%;
-}
-
-main a {
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-nav {
-  padding: 20px;
-  flex: 1 1 20%;
-}
-
-nav li {
-  display: flex;
-}
-
-nav li > * {
-  padding: 10px;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-}
-
-nav h1 {
-  font-size: 1.5rem;
-}
-
-nav h2 {
-  margin-left: 10px;
-  font-weight: normal;
-  font-size: 1rem;
 }
 
 form {
@@ -93,14 +53,13 @@ form button {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+form button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 .icon {
   height: 30px;
   width: 30px;
-}
-
-.container {
-  display: flex;
-  flex-direction: row;
 }
 
 .successMessage {
@@ -117,16 +76,6 @@ form button {
   color: red;
 }
 
-.errorPage {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-@media only screen and (max-width: 786px) {
-  .container {
-    flex-direction: column;
-  }
+.textBoxInput {
+  height: 4ch;
 }

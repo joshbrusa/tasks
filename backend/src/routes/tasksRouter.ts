@@ -1,17 +1,9 @@
 import { Router } from "express";
-import {
-  reads,
-  creates,
-  updates,
-  deletes,
-} from "../controllers/taskController";
-import authMiddleware from "../middleware/authMiddleware";
+import { tasks, tasksId } from "../controllers/taskController";
 
 const router = Router();
 
-router.get("/reads/:perPage/:page", reads);
-router.post("/creates", authMiddleware, creates);
-router.put("/updates", authMiddleware, updates);
-router.delete("/deletes", authMiddleware, deletes);
+router.get("/:perPage/:page", tasks);
+router.get("/:id", tasksId);
 
 export default router;

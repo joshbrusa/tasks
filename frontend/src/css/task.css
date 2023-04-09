@@ -1,0 +1,24 @@
+.taskContainer {
+  padding: 10px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.taskContainer:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.taskContainer > h1 {
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.taskContainer > h2 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
