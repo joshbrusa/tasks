@@ -65,9 +65,24 @@ form button:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+article {
+  margin-bottom: 20px;
+}
+
+article > * {
+  margin-bottom: 10px;
+}
+
 .icon {
   height: 30px;
   width: 30px;
+}
+
+.githubLogo {
+  padding: 2px;
+  height: 26px;
+  width: 26px;
+  filter: invert(1);
 }
 
 .successMessage {

@@ -32,7 +32,7 @@ Database: MySQL.
 
 Other: Git, GitHub, Docker, Railway.
 
-## How It's Made
+## Comments
 
 ### Frontend
 
