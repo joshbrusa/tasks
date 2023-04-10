@@ -2,16 +2,21 @@ import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { UserContext } from "./contexts/UserContext";
 import ErrorPage from "./routes/ErrorPage";
-import Root from "./routes/Root";
-import SignInRoot from "./routes/SignInRoot";
-import SignOutRoot from "./routes/SignOutRoot";
+import Root from "./routes/roots/Root";
+import SignInRoot from "./routes/roots/SignInRoot";
+import SignOutRoot from "./routes/roots/SignOutRoot";
 import Index from "./routes/Index";
-import Tasks from "./routes/Tasks";
-import MyTasks from "./routes/MyTasks";
-import SignIn from "./routes/SignIn";
-import SignUp from "./routes/SignUp";
-import ChangePassword from "./routes/ChangePassword";
-import ChangePasswordJwt from "./routes/ChangePasswordJwt";
+import Tasks from "./routes/tasks/Tasks";
+import TasksId from "./routes/tasks/TasksId";
+import MyTasks from "./routes/myTasks/MyTasks";
+import MyTasksCreates from "./routes/myTasks/MyTasksCreates";
+import MyTasksId from "./routes/myTasks/MyTasksId";
+import MyTasksIdUpdates from "./routes/myTasks/MyTasksIdUpdates";
+import MyTasksIdDeletes from "./routes/myTasks/MyTasksIdDeletes";
+import SignIn from "./routes/auth/SignIn";
+import SignUp from "./routes/auth/SignUp";
+import ChangePassword from "./routes/auth/ChangePassword";
+import ChangePasswordJwt from "./routes/auth/ChangePasswordJwt";
 import type { User } from "./contexts/UserContext";
 
 const router = createBrowserRouter([
@@ -28,11 +33,31 @@ const router = createBrowserRouter([
         element: <Tasks />,
       },
       {
+        path: "tasks/:id",
+        element: <TasksId />,
+      },
+      {
         element: <SignInRoot />,
         children: [
           {
             path: "myTasks",
             element: <MyTasks />,
+          },
+          {
+            path: "myTasks/creates",
+            element: <MyTasksCreates />,
+          },
+          {
+            path: "myTasks/:id",
+            element: <MyTasksId />,
+          },
+          {
+            path: "myTasks/:id/updates",
+            element: <MyTasksIdUpdates />,
+          },
+          {
+            path: "myTasks/:id/deletes",
+            element: <MyTasksIdDeletes />,
           },
         ],
       },

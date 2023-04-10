@@ -1,16 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
-export default function SignUp() {
-  const [formValues, setFormValues] = useState({
-    email: "",
-    username: "",
-    password: "",
-  });
+export default function ChangePassword() {
+  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const navigate = useNavigate();
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -23,34 +18,37 @@ export default function SignUp() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signUp/`,
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/changePassword/`,
         {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: formValues.email,
-            username: formValues.username,
-            password: formValues.password,
           }),
         }
       );
 
       if (res.ok) {
-        navigate("/signIn");
+        const json = await res.json();
+        setErrorMessage("");
+        setSuccessMessage(json.successMessage);
+        setDisabled(false);
       } else {
         const json = await res.json();
+        setSuccessMessage("");
         setErrorMessage(json.errorMessage);
         setDisabled(false);
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1>Change Password</h1>
       <form onSubmit={handleSubmit}>
         <label>Email</label>
         <input
@@ -59,23 +57,12 @@ export default function SignUp() {
           value={formValues.email}
           onChange={handleInputChange}
         />
-        <label>Username</label>
-        <input
-          type="text"
-          name="username"
-          value={formValues.username}
-          onChange={handleInputChange}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formValues.password}
-          onChange={handleInputChange}
-        />
         <button type="submit" disabled={disabled}>
           Submit
         </button>
+        {successMessage ? (
+          <div className="successMessage">{successMessage}</div>
+        ) : null}
         {errorMessage ? (
           <div className="errorMessage">{errorMessage}</div>
         ) : null}

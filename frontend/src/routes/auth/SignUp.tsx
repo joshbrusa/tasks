@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
-export default function ChangePasswordJwt() {
-  const [formValues, setFormValues] = useState({ password: "" });
+export default function SignUp() {
+  const [formValues, setFormValues] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const { jwt } = useParams();
   const navigate = useNavigate();
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -20,12 +23,14 @@ export default function ChangePasswordJwt() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/changePassword/${jwt}/`,
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signUp/`,
         {
-          method: "PUT",
+          method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            email: formValues.email,
+            username: formValues.username,
             password: formValues.password,
           }),
         }
@@ -40,13 +45,28 @@ export default function ChangePasswordJwt() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
   return (
     <>
-      <h1>Change Password</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formValues.email}
+          onChange={handleInputChange}
+        />
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          value={formValues.username}
+          onChange={handleInputChange}
+        />
         <label>Password</label>
         <input
           type="password"

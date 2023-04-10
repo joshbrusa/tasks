@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useUser from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
 export default function SignIn() {
@@ -41,6 +41,7 @@ export default function SignIn() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
@@ -69,8 +70,12 @@ export default function SignIn() {
           <div className="errorMessage">{errorMessage}</div>
         ) : null}
       </form>
-      <Link to="/changePassword">Forgot password? Reset Password</Link>
-      <Link to="/signUp">No account? Sign Up</Link>
+      <Link className="pageLink" to="/changePassword">
+        Forgot password? Reset Password
+      </Link>
+      <Link className="pageLink" to="/signUp">
+        No account? Sign Up
+      </Link>
     </>
   );
 }

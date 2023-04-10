@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ChangeEvent, SyntheticEvent } from "react";
 
-export default function ChangePassword() {
-  const [formValues, setFormValues] = useState({ email: "", password: "" });
-  const [successMessage, setSuccessMessage] = useState("");
+export default function MyTasksCreates() {
+  const [formValues, setFormValues] = useState({ name: "", description: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const navigate = useNavigate();
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
   }
@@ -18,50 +21,52 @@ export default function ChangePassword() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/changePassword/`,
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/myTasks/creates`,
         {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: formValues.email,
+            name: formValues.name,
+            description: formValues.description,
           }),
         }
       );
 
       if (res.ok) {
-        const json = await res.json();
-        setErrorMessage("");
-        setSuccessMessage(json.successMessage);
-        setDisabled(false);
+        navigate("/myTasks");
       } else {
         const json = await res.json();
-        setSuccessMessage("");
         setErrorMessage(json.errorMessage);
         setDisabled(false);
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
   return (
     <>
-      <h1>Change Password</h1>
+      <h1>Create Task</h1>
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
+        <label>Name</label>
         <input
-          type="email"
-          name="email"
-          value={formValues.email}
+          type="text"
+          name="name"
+          value={formValues.name}
           onChange={handleInputChange}
+        />
+        <label>Description</label>
+        <textarea
+          name="description"
+          value={formValues.description}
+          onChange={handleInputChange}
+          rows={10}
         />
         <button type="submit" disabled={disabled}>
           Submit
         </button>
-        {successMessage ? (
-          <div className="successMessage">{successMessage}</div>
-        ) : null}
         {errorMessage ? (
           <div className="errorMessage">{errorMessage}</div>
         ) : null}

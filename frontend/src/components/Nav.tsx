@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   GlobeAltIcon,
@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
 import useUser from "../hooks/useUser";
+import "../css/nav.css";
 
 export default function Nav() {
   const { user } = useContext(UserContext);
@@ -28,6 +29,17 @@ export default function Nav() {
         <li>
           <Link to="/">
             <h1>Josh Tasks</h1>
+          </Link>
+        </li>
+        <li>
+          <Link to="https://github.com/joshbrusa/joshtasks" target="_blank">
+            <img
+              className="icon"
+              src="/githubLogo.svg"
+              alt="Git Hub Logo"
+              style={{ filter: "invert(1)" }}
+            />
+            <h2>GitHub</h2>
           </Link>
         </li>
         <li>

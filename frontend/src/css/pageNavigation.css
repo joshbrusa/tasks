@@ -1,0 +1,13 @@
+.pageNavigationContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageNavigationButton {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pageNavigationButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
