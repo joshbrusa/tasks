@@ -13,7 +13,6 @@ export async function myTasks(
     const tasks = await prisma.task.findMany({
       where: {
         userId,
-        parentTask: null,
       },
       select: {
         id: true,
@@ -33,35 +32,6 @@ export async function myTasks(
     });
 
     res.json(tasks);
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function myTasksId(
-  userId: number,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const { id } = req.params;
-
-    const task = await prisma.task.findUnique({
-      where: {
-        id: parseInt(id),
-      },
-    });
-
-    if (!task) {
-      res.status(404).json({ errorMessage: "task not found" });
-      return;
-    } else if (userId != task.userId) {
-      res.status(401).json({ errorMessage: "unauthorized" });
-      return;
-    }
-
-    res.json(task);
   } catch (error) {
     next(error);
   }
@@ -98,19 +68,46 @@ export async function myTasksCreates(
   }
 }
 
-export async function myTasksUpdates(
+export async function myTasksId(
   userId: number,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { id, name, description } = req.body;
+    const { id } = req.params;
 
-    if (!id) {
-      res.status(403).json({ errorMessage: "id required" });
+    const task = await prisma.task.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    if (!task) {
+      res.status(404).json({ errorMessage: "task not found" });
       return;
-    } else if (!name) {
+    } else if (userId != task.userId) {
+      res.status(401).json({ errorMessage: "unauthorized" });
+      return;
+    }
+
+    res.json({ name: task.name, description: task.description });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function myTasksIdUpdates(
+  userId: number,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = req.params;
+    const { name, description } = req.body;
+
+    if (!name) {
       res.status(403).json({ errorMessage: "name required" });
       return;
     } else if (!description) {
@@ -120,7 +117,7 @@ export async function myTasksUpdates(
 
     const task = await prisma.task.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -134,7 +131,7 @@ export async function myTasksUpdates(
 
     await prisma.task.update({
       where: {
-        id,
+        id: parseInt(id),
       },
       data: {
         name,
@@ -148,23 +145,18 @@ export async function myTasksUpdates(
   }
 }
 
-export async function myTasksDeletes(
+export async function myTasksIdDeletes(
   userId: number,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { id } = req.body;
-
-    if (!id) {
-      res.status(403).json({ errorMessage: "id required" });
-      return;
-    }
+    const { id } = req.params;
 
     const task = await prisma.task.findUnique({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 
@@ -178,7 +170,7 @@ export async function myTasksDeletes(
 
     await prisma.task.delete({
       where: {
-        id,
+        id: parseInt(id),
       },
     });
 

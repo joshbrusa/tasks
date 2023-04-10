@@ -45,6 +45,7 @@ export default function SignUp() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 

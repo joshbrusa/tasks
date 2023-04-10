@@ -10,10 +10,7 @@ import Tasks from "./routes/tasks/Tasks";
 import TasksId from "./routes/tasks/TasksId";
 import MyTasks from "./routes/myTasks/MyTasks";
 import MyTasksCreates from "./routes/myTasks/MyTasksCreates";
-import MyTasksUpdates from "./routes/myTasks/MyTasksUpdates";
-import MyTasksDeletes from "./routes/myTasks/MyTasksDeletes";
 import MyTasksId from "./routes/myTasks/MyTasksId";
-import MyTasksIdCreates from "./routes/myTasks/MyTasksIdCreates";
 import MyTasksIdUpdates from "./routes/myTasks/MyTasksIdUpdates";
 import MyTasksIdDeletes from "./routes/myTasks/MyTasksIdDeletes";
 import SignIn from "./routes/auth/SignIn";
@@ -51,20 +48,8 @@ const router = createBrowserRouter([
             element: <MyTasksCreates />,
           },
           {
-            path: "myTasks/updates",
-            element: <MyTasksUpdates />,
-          },
-          {
-            path: "myTasks/deletes",
-            element: <MyTasksDeletes />,
-          },
-          {
             path: "myTasks/:id",
             element: <MyTasksId />,
-          },
-          {
-            path: "myTasks/:id/creates",
-            element: <MyTasksIdCreates />,
           },
           {
             path: "myTasks/:id/updates",

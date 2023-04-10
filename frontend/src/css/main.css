@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
+  font-weight: normal;
   color: white;
 }
 
@@ -45,6 +46,13 @@ form input {
   color: black;
 }
 
+form textarea {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+}
+
 form button {
   margin-top: 10px;
   padding: 10px;
@@ -78,4 +86,27 @@ form button:hover {
 
 .textBoxInput {
   height: 4ch;
+}
+
+.pageLink {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pageLink:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.pageButton {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pageButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }

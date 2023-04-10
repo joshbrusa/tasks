@@ -8,7 +8,9 @@ export default function MyTasksCreates() {
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
   }
@@ -19,7 +21,7 @@ export default function MyTasksCreates() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_ORIGIN}/auth/signIn/`,
+        `${import.meta.env.VITE_BACKEND_ORIGIN}/myTasks/creates`,
         {
           method: "POST",
           credentials: "include",
@@ -40,6 +42,7 @@ export default function MyTasksCreates() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
@@ -47,20 +50,19 @@ export default function MyTasksCreates() {
     <>
       <h1>Create Task</h1>
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
+        <label>Name</label>
         <input
           type="text"
           name="name"
           value={formValues.name}
           onChange={handleInputChange}
         />
-        <label>Password</label>
-        <input
-          className="textBoxInput"
-          type="text"
+        <label>Description</label>
+        <textarea
           name="description"
           value={formValues.description}
           onChange={handleInputChange}
+          rows={10}
         />
         <button type="submit" disabled={disabled}>
           Submit

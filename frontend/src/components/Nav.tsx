@@ -32,6 +32,17 @@ export default function Nav() {
           </Link>
         </li>
         <li>
+          <Link to="https://github.com/joshbrusa/joshtasks" target="_blank">
+            <img
+              className="icon"
+              src="/githubLogo.svg"
+              alt="Git Hub Logo"
+              style={{ filter: "invert(1)" }}
+            />
+            <h2>GitHub</h2>
+          </Link>
+        </li>
+        <li>
           <Link to="/tasks">
             <GlobeAltIcon className="icon" />
             <h2>Tasks</h2>

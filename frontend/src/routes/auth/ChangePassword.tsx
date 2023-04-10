@@ -42,6 +42,7 @@ export default function ChangePassword() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 

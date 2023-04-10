@@ -6,9 +6,6 @@ export async function tasks(req: Request, res: Response, next: NextFunction) {
     const { perPage, page } = req.params;
 
     const tasks = await prisma.task.findMany({
-      where: {
-        parentTask: null,
-      },
       select: {
         id: true,
         name: true,
@@ -39,6 +36,15 @@ export async function tasksId(req: Request, res: Response, next: NextFunction) {
     const task = await prisma.task.findUnique({
       where: {
         id: parseInt(id),
+      },
+      select: {
+        name: true,
+        description: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
       },
     });
 

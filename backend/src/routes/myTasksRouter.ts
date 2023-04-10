@@ -3,17 +3,17 @@ import {
   myTasks,
   myTasksId,
   myTasksCreates,
-  myTasksUpdates,
-  myTasksDeletes,
+  myTasksIdUpdates,
+  myTasksIdDeletes,
 } from "../controllers/myTasksController";
 import authMiddleware from "../middleware/authMiddleware";
 
 const router = Router();
 
 router.get("/:perPage/:page", authMiddleware, myTasks);
-router.get("/:id", authMiddleware, myTasksId);
 router.post("/creates", authMiddleware, myTasksCreates);
-router.put("/updates", authMiddleware, myTasksUpdates);
-router.delete("/deletes", authMiddleware, myTasksDeletes);
+router.get("/:id", authMiddleware, myTasksId);
+router.put("/:id/updates", authMiddleware, myTasksIdUpdates);
+router.delete("/:id/deletes", authMiddleware, myTasksIdDeletes);
 
 export default router;

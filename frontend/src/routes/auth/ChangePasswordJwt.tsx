@@ -40,6 +40,7 @@ export default function ChangePasswordJwt() {
       }
     } catch {
       setErrorMessage("cannot reach server");
+      setDisabled(false);
     }
   }
 
