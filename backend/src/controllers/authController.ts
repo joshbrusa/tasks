@@ -155,7 +155,7 @@ export async function changePassword(
         transport.sendMail({
           from: process.env.NODEMAILER_EMAIL,
           to: email,
-          subject: "Josh Tasks Change Password",
+          subject: "Tasks Change Password",
           html: `Click <a href="${url}">here</a> to change your password.`,
           text: `Use this link to change your password: ${url}`,
         });

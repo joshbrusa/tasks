@@ -28,7 +28,7 @@ export default function Nav() {
       <ul>
         <li>
           <Link to="/">
-            <h1>Josh Tasks</h1>
+            <h1>Tasks</h1>
           </Link>
         </li>
         <li>
@@ -61,7 +61,7 @@ export default function Nav() {
           </li>
         )}
         <li>
-          <Link to="https://github.com/joshbrusa/joshtasks" target="_blank">
+          <Link to="https://github.com/joshbrusa/tasks" target="_blank">
             <img
               className="githubLogo"
               src="/githubLogo.svg"
